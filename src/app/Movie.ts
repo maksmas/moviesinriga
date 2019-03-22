@@ -4,6 +4,6 @@ export interface Movie {
   cinema: Cinemas;
   title: string;
   length: string;
-  startDate: string;
-  startTime: string;
+  startDateTime: string;
+  url: string;
 }
