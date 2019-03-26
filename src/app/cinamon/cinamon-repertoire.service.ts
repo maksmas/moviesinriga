@@ -5,6 +5,7 @@ import {CinamonRepertoire} from "./CinamonRepertoire";
 import {Movie} from "../Movie";
 import {Cinemas} from "../Cinemas";
 import {RepertoireService} from "../RepertoireService";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: "root"
@@ -17,13 +18,19 @@ export class CinamonRepertoireService implements RepertoireService {
   }
 
   private buildRequestUrl() {
-    return `${environment.cinamon_url}?cinema_id=1633064176&timezone=Europe%2FRiga&locale=lv&grouped=true&date=${this.currentDate()}`;
-  }
+    function currentDate(): string {
+      const today = new Date();
 
-  private currentDate(): string {
-    const today = new Date();
+      return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+    }
 
-    return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+    return environment.cinamon_url +
+      "?cinema_id=1633064176" +
+      "&timezone=Europe%2FRiga" +
+      "&locale=en" +
+      "&grouped=true" +
+      "&include=film.genre,relatedAttributes" +
+      "&date=" + currentDate();
   }
 
   private mapToMovies(repertoire: CinamonRepertoire): Movie[] {
@@ -33,9 +40,10 @@ export class CinamonRepertoireService implements RepertoireService {
       return {
         cinema: Cinemas.CINAMON,
         title: entry.film.name,
-        startDateTime: entry.date + " " + entry.time,
-        length: entry.length_for_humans,
-        url: `https://cinamonkino.com/alfa/seat-plan/${entry.pid}/lv`
+        duration: entry.length_for_humans,
+        startTime: moment.utc(entry.showtime).unix(),
+        url: `https://cinamonkino.com/alfa/seat-plan/${entry.pid}/lv`,
+        posterUrl: entry.film.poster
       } ;
     });
   }

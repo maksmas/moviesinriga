@@ -4,6 +4,7 @@ import {RepertoireService} from "../RepertoireService";
 import {Movie} from "../Movie";
 import {environment} from "../../environments/environment";
 import {Cinemas} from "../Cinemas";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: "root"
@@ -37,38 +38,78 @@ export class ForumcinemasRepertoireService implements RepertoireService {
   }
 
   private mapToMovie(show: Element): Movie {
+    function parsePosterUrl(images: Element): string {
+      const imagesChildes = images.children;
+
+      for (let i = 0; i < imagesChildes.length; ++i) {
+        const item = imagesChildes.item(i);
+
+        if (item.nodeName === "EventMediumImagePortrait") {
+          return item.innerHTML;
+        }
+      }
+
+      return "";
+    }
+
     const showChildes = show.children;
 
     const movie: Movie = {
       cinema: Cinemas.FORUMCINEMAS,
-      length: "",
       title: "",
-      startDateTime: "",
-      url: null
+      url: null,
+      posterUrl: null,
+      startTime: 0,
+      duration: ""
     };
 
     for (let i = 0; i < showChildes.length; ++i) {
       const item = showChildes.item(i);
 
+      let startTime: string;
+      let endTime: string;
+
+      // todo fix bug with duration
       switch (item.nodeName) {
-        case "LengthInMinutes": movie.length = item.innerHTML; break;
-        case "dttmShowStart": movie.startDateTime = item.innerHTML; break;
-        case "Title": movie.title = item.innerHTML; break;
-        case "ShowURL": movie.url = item.innerHTML; break;
-        default: break;
+        case "dttmShowStartUTC":
+          movie.startTime = moment(item.innerHTML).unix();
+          break;
+        case "dttmShowStart":
+          startTime = item.innerHTML;
+          break;
+        case "dttmShowEnd":
+          endTime = item.innerHTML;
+          break;
+        case "Title":
+          movie.title = item.innerHTML;
+          break;
+        case "ShowURL":
+          movie.url = item.innerHTML;
+          break;
+        case "Images":
+          movie.posterUrl = parsePosterUrl(item);
+          break;
+        default:
+          break;
       }
+
+      // todo remove logs
+      console.log(startTime);
+      console.log(endTime);
+      movie.duration = moment(startTime).format("HH:mm") + " - " + moment(endTime).format("HH:mm");
+      console.log(movie.duration);
     }
 
     return movie;
   }
 
   private buildUrl(): string {
-    return `${environment.forumcinemas_url}?dt=${this.currentDate()}`;
-  }
+    function currentDate(): string {
+      const today = new Date();
 
-  private currentDate(): string {
-    const today = new Date();
+      return `${today.getFullYear()}.${today.getMonth() + 1}.${today.getDate()}`;
+    }
 
-    return `${today.getFullYear()}.${today.getMonth() + 1}.${today.getDate()}`;
+    return `${environment.forumcinemas_url}?dt=${currentDate()}`;
   }
 }

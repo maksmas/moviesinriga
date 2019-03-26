@@ -19,7 +19,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cinamonRepertoireService.fetch().then(fetchedMovies => this.movies.push(...fetchedMovies));
-    this.forumcinemasRepertoireService.fetch().then(fetchedMovies => this.movies.push(...fetchedMovies));
+    this.cinamonRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
+    this.forumcinemasRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
+  }
+
+  private appendMovies(movies: Movie[]): void {
+    const needSort = this.movies.length !== 0;
+    this.movies.push(...movies);
+
+    if (needSort) {
+      this.movies.sort((a, b) => a.startTime - b.startTime);
+    }
   }
 }

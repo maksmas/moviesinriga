@@ -1,14 +1,10 @@
-<div class="table-wrapper">
-  <div class="row">
-    <span>Cinema</span>
-    <span>Title</span>
-    <span>Length</span>
-  </div>
-
-  <div class="row" *ngFor="let movie of movies">
-      <div>{{movie.cinema}}</div>
-      <div>{{movie.title}}</div>
-      <div>{{movie.length}}</div>
-      <a [href]="movie.url">Open</a>
-  </div>
-</div>
+<ul class="movie-cards">
+  <li *ngFor="let movie of movies" class="movie-card">
+    <div class="card">
+      <div class="container">
+        <h4><b>{{movie.title}}</b></h4>
+        <p>{{movie | json}}</p>
+      </div>
+    </div>
+  </li>
+</ul>
