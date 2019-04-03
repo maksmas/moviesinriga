@@ -63,13 +63,12 @@ export class ForumcinemasRepertoireService implements RepertoireService {
       duration: ""
     };
 
+    let startTime: string;
+    let endTime: string;
+
     for (let i = 0; i < showChildes.length; ++i) {
       const item = showChildes.item(i);
 
-      let startTime: string;
-      let endTime: string;
-
-      // todo fix bug with duration
       switch (item.nodeName) {
         case "dttmShowStartUTC":
           movie.startTime = moment(item.innerHTML).unix();
@@ -92,14 +91,9 @@ export class ForumcinemasRepertoireService implements RepertoireService {
         default:
           break;
       }
-
-      // todo remove logs
-      console.log(startTime);
-      console.log(endTime);
-      movie.duration = moment(startTime).format("HH:mm") + " - " + moment(endTime).format("HH:mm");
-      console.log(movie.duration);
     }
 
+    movie.duration = moment(startTime).format("HH:mm") + " - " + moment(endTime).format("HH:mm");
     return movie;
   }
 

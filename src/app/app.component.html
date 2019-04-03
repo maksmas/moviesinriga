@@ -1,9 +1,14 @@
 <ul class="movie-cards">
-  <li *ngFor="let movie of movies" class="movie-card">
+  <li *ngFor="let movie of movies" class="movie-card" (click)="goToMovie(movie)">
     <div class="card">
-      <div class="container">
+      <div class="column">
+        <img [src]="movie.posterUrl"/>
+      </div>
+
+      <div class="container column">
         <h4><b>{{movie.title}}</b></h4>
-        <p>{{movie | json}}</p>
+
+        <p>{{movie.duration}}</p>
       </div>
     </div>
   </li>

@@ -23,6 +23,10 @@ export class AppComponent implements OnInit {
     this.forumcinemasRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
   }
 
+  goToMovie(movie: Movie): void {
+    location.href = movie.url;
+  }
+
   private appendMovies(movies: Movie[]): void {
     const needSort = this.movies.length !== 0;
     this.movies.push(...movies);
