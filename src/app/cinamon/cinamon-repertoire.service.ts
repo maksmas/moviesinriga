@@ -41,7 +41,7 @@ export class CinamonRepertoireService implements RepertoireService {
         cinema: Cinemas.CINAMON,
         title: entry.film.name,
         duration: entry.length_for_humans,
-        startTime: moment.utc(entry.showtime).unix(),
+        startTime: moment(entry.showtime).unix(),
         url: `https://cinamonkino.com/alfa/seat-plan/${entry.pid}/lv`,
         posterUrl: entry.film.poster
       } ;

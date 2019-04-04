@@ -24,15 +24,24 @@ export class AppComponent implements OnInit {
   }
 
   goToMovie(movie: Movie): void {
-    location.href = movie.url;
+    window.open(movie.url, "_blank");
   }
+
+  // todo remove past seanсes
 
   private appendMovies(movies: Movie[]): void {
     const needSort = this.movies.length !== 0;
     this.movies.push(...movies);
 
     if (needSort) {
-      this.movies.sort((a, b) => a.startTime - b.startTime);
+      this.movies.sort((a, b) => {
+        console.log("///////////////");
+        console.log(a);
+        console.log(b);
+        console.log("///////////////");
+
+        return a.startTime - b.startTime;
+      });
     }
   }
 }
