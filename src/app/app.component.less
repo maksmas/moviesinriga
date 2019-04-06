@@ -1,7 +1,8 @@
-.movie-cards {
+.movie-cards-base {
   display: grid;
   grid-auto-rows: minmax(125px, auto);
-  grid-gap: 2.5rem;
+  justify-content: center;
+  grid-gap: 2em;
 
   .movie-card {
     display: flex;
@@ -11,6 +12,7 @@
     grid-gap: 2px;
     border: 1px solid rgba(0, 0, 0, 0);
     min-width: 500px;
+    max-width: 640px;
     cursor: pointer;
 
     .card {
@@ -36,6 +38,11 @@
         padding: 0 4px 0;
         text-align: center;
         width: 100%;
+
+        .cinema-logo {
+          width: 32px;
+          height: 32px;
+        }
       }
     }
 
@@ -45,31 +52,42 @@
   }
 }
 
+.movie-cards {
+  padding: 0;
+}
+
 @media screen and (min-width: 1100px) {
   .movie-cards {
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 2px;
+    padding: 0 5vw;
   }
 }
 
 @media screen and (min-width: 1650px) {
   .movie-cards {
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 3px;
+    padding: 0 7vw;
   }
 }
 
 @media screen and (min-width: 2200px) {
   .movie-cards {
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 3px;
+    padding: 0 10vw;
   }
 }
 
 @media screen and (min-width: 2750px) {
   .movie-cards {
     grid-template-columns: repeat(5, 1fr);
-    grid-gap: 3px;
+    padding: 0 20vw;
+  }
+}
+
+@media screen and (min-width: 3200px) {
+  .movie-cards {
+    grid-template-columns: repeat(5, 1fr);
+    padding: 0 25vw;
   }
 }
 

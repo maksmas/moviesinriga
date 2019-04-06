@@ -6,6 +6,7 @@ import {Movie} from "../Movie";
 import {Cinemas} from "../Cinemas";
 import {RepertoireService} from "../RepertoireService";
 import * as moment from "moment";
+import {logoUrl} from "../utils";
 
 @Injectable({
   providedIn: "root"
@@ -39,6 +40,7 @@ export class CinamonRepertoireService implements RepertoireService {
 
       return {
         cinema: Cinemas.CINAMON,
+        cinemaLogoUrl: logoUrl(Cinemas.CINAMON),
         title: entry.film.name,
         duration: entry.length_for_humans,
         startTime: moment(entry.showtime).unix(),

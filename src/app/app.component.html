@@ -1,8 +1,8 @@
-<ul class="movie-cards">
+<ul class="movie-cards movie-cards-base">
   <li *ngFor="let movie of movies" class="movie-card" (click)="goToMovie(movie)">
     <div class="card">
       <div class="column">
-        <img [src]="movie.posterUrl"/>
+        <img [alt]="movie.title" [src]="movie.posterUrl"/>
       </div>
 
       <div class="container column">
@@ -11,6 +11,8 @@
         <p>{{movie.duration}}</p>
 
         <p>{{movie.cinema}}</p>
+        
+        <img class="cinema-logo" [alt]="movie.cinema" [src]="movie.cinemaLogoUrl">
       </div>
     </div>
   </li>

@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Movie} from "./Movie";
 import {CinamonRepertoireService} from "./cinamon/cinamon-repertoire.service";
 import {ForumcinemasRepertoireService} from "./forumcinemas/forumcinemas-repertoire.service";
+import * as moment from "moment";
 
 @Component({
   selector: "app-root",
@@ -27,19 +28,14 @@ export class AppComponent implements OnInit {
     window.open(movie.url, "_blank");
   }
 
-  // todo remove past seanсes
-
   private appendMovies(movies: Movie[]): void {
-    const needSort = this.movies.length !== 0;
+    movies = movies.filter(m => m.startTime > moment().unix());
+
+    const needSort = this.movies.length !== 0 && movies.length !== 0;
     this.movies.push(...movies);
 
     if (needSort) {
       this.movies.sort((a, b) => {
-        console.log("///////////////");
-        console.log(a);
-        console.log(b);
-        console.log("///////////////");
-
         return a.startTime - b.startTime;
       });
     }

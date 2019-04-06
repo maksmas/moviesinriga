@@ -5,6 +5,7 @@ import {Movie} from "../Movie";
 import {environment} from "../../environments/environment";
 import {Cinemas} from "../Cinemas";
 import * as moment from "moment";
+import {logoUrl} from "../utils";
 
 @Injectable({
   providedIn: "root"
@@ -56,6 +57,7 @@ export class ForumcinemasRepertoireService implements RepertoireService {
 
     const movie: Movie = {
       cinema: Cinemas.FORUMCINEMAS,
+      cinemaLogoUrl: logoUrl(Cinemas.FORUMCINEMAS),
       title: "",
       url: null,
       posterUrl: null,
