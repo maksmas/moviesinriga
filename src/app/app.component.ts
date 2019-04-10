@@ -3,6 +3,7 @@ import {Movie} from "./Movie";
 import {CinamonRepertoireService} from "./cinamon/cinamon-repertoire.service";
 import {ForumcinemasRepertoireService} from "./forumcinemas/forumcinemas-repertoire.service";
 import * as moment from "moment";
+import {MultikinoRepertoireService} from "./multikino/multikino-repertoire.service";
 
 @Component({
   selector: "app-root",
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private cinamonRepertoireService: CinamonRepertoireService,
-    private forumcinemasRepertoireService: ForumcinemasRepertoireService
+    private forumcinemasRepertoireService: ForumcinemasRepertoireService,
+    private multikinoRepertoireService: MultikinoRepertoireService
   ) {
     this.movies = [];
   }
@@ -22,6 +24,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.cinamonRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
     this.forumcinemasRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
+    this.multikinoRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
   }
 
   goToMovie(movie: Movie): void {
@@ -34,6 +37,7 @@ export class AppComponent implements OnInit {
     const needSort = this.movies.length !== 0 && movies.length !== 0;
     this.movies.push(...movies);
 
+    // todo mb use merge sort here
     if (needSort) {
       this.movies.sort((a, b) => {
         return a.startTime - b.startTime;

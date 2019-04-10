@@ -1,4 +1,10 @@
+// todo refactor names to single
+
 export interface MultikinoRepertoire {
+  films: MultikinoRepertoireItems[];
+}
+
+export interface MultikinoRepertoireItems {
   original_s_count: number;
   sortable: number;
   showings: Showings[];

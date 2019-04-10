@@ -35,12 +35,14 @@ export class CinamonRepertoireService implements RepertoireService {
   }
 
   private mapToMovies(repertoire: CinamonRepertoire): Movie[] {
+    const cinemaLogoUrl = logoUrl(Cinemas.CINAMON);
+
     return Object.keys(repertoire).map(key => {
       const entry = repertoire[key][0];
 
       return {
         cinema: Cinemas.CINAMON,
-        cinemaLogoUrl: logoUrl(Cinemas.CINAMON),
+        cinemaLogoUrl: cinemaLogoUrl,
         title: entry.film.name,
         duration: entry.length_for_humans,
         startTime: moment(entry.showtime).unix(),
