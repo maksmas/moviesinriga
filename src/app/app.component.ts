@@ -4,6 +4,7 @@ import {CinamonRepertoireService} from "./cinamon/cinamon-repertoire.service";
 import {ForumcinemasRepertoireService} from "./forumcinemas/forumcinemas-repertoire.service";
 import * as moment from "moment";
 import {MultikinoRepertoireService} from "./multikino/multikino-repertoire.service";
+import {ApolloRepertoireService} from "./apollo/apollo-repertoire.service";
 
 @Component({
   selector: "app-root",
@@ -16,15 +17,17 @@ export class AppComponent implements OnInit {
   constructor(
     private cinamonRepertoireService: CinamonRepertoireService,
     private forumcinemasRepertoireService: ForumcinemasRepertoireService,
-    private multikinoRepertoireService: MultikinoRepertoireService
+    private multikinoRepertoireService: MultikinoRepertoireService,
+    private apolloRepertoireService: ApolloRepertoireService
   ) {
     this.movies = [];
   }
 
   ngOnInit(): void {
-    this.cinamonRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
-    this.forumcinemasRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
-    this.multikinoRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
+    // this.cinamonRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
+    // this.forumcinemasRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
+    // this.multikinoRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
+    this.apolloRepertoireService.fetch().then(fetchedMovies => this.appendMovies(fetchedMovies));
   }
 
   goToMovie(movie: Movie): void {

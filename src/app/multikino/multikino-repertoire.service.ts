@@ -11,6 +11,7 @@ import * as moment from "moment";
   providedIn: "root"
 })
 export class MultikinoRepertoireService implements RepertoireService {
+  // todo rewrite to http client
   fetch(): Promise<Movie[]> {
     return fetch(environment.multikino_url,
       {
